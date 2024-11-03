@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery - Nature View</title>
+    <link rel="stylesheet" href="style.css">
+</head>   
+<body>
+    <!-- Full image display with navigation buttons -->
+    <div class="full-img" id="fullImgBox">
+        <span onclick="closefullImg()">X</span>
+        <img src="images/image-1.png" id="fullImg">
+        <button class="prev" onclick="changeImage(-1)">❮</button>
+        <button class="next" onclick="changeImage(1)">❯</button>
+    </div>
+    
+    <!-- Gallery Title -->
+    <h1 class="gallery-title">Image Gallery of Nature View</h1>
+    
+    <!-- Image Gallery -->
+    <div class="image-gallery">
+        <img src="images/image-1.jpg" class="large-img" onclick="openfullImg(this.src)">
+        <img src="images/image-2.jpg" class="large-img" onclick="openfullImg(this.src)">
+        <img src="images/image-12.jpg" onclick="openfullImg(this.src)">
+        <img src="images/image-4.png" onclick="openfullImg(this.src)">
+        <img src="images/image-5.jpg" onclick="openfullImg(this.src)">
+        <img src="images/image-6.jpg" onclick="openfullImg(this.src)">
+        <img src="images/image-7.jpg" onclick="openfullImg(this.src)">
+        <img src="images/image-8.jpg" onclick="openfullImg(this.src)">
+        <img src="images/image-9.jpg" onclick="openfullImg(this.src)">
+        <img src="images/image-10.jpg" onclick="openfullImg(this.src)">
+    </div>
+
+    <script>
+        var fullImgBox = document.getElementById("fullImgBox");
+        var fullImg = document.getElementById("fullImg");
+        var images = document.querySelectorAll(".image-gallery img");
+        var currentIndex = 0;
+
+        // Function to open the full image
+        function openfullImg(pic) {
+            fullImgBox.style.display = "flex";
+            fullImg.src = pic;
+            currentIndex = Array.from(images).findIndex(img => img.src === pic);
+        }
+
+        // Function to close the full image
+        function closefullImg() {
+            fullImgBox.style.display = "none";
+        }
+
+        // Function to change the image
+        function changeImage(step) {
+            currentIndex += step;
+            if (currentIndex < 0) {
+                currentIndex = images.length - 1;
+            } else if (currentIndex >= images.length) {
+                currentIndex = 0;
+            }
+            fullImg.src = images[currentIndex].src;
+        }
+
+        // Event listener for keyboard navigation
+        document.addEventListener("keydown", (e) => { 
+            if (fullImgBox.style.display === "flex") {
+                if (e.key === "ArrowLeft") changeImage(-1);
+                if (e.key === "ArrowRight") changeImage(1);
+                if (e.key === "Escape") closefullImg();
+            }
+        });
+    </script>
+</body>
+</html>
+
